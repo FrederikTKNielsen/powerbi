@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgetanalyse Rapport</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .chart-container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .chart-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: -10px;
+        }
+        .chart-col {
+            flex: 1 1 calc(50% - 20px);
+            margin: 10px;
+            min-width: 300px;
+        }
+        .chart-col img {
+            width: 100%;
+            height: auto;
+        }
+        .recommendations {
+            background-color: #e8f4fd;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .recommendations h2 {
+            color: #3498db;
+            border-bottom: none;
+        }
+        .recommendations ol {
+            padding-left: 20px;
+        }
+        @media (max-width: 768px) {
+            .chart-col {
+                flex: 1 1 100%;
+            }
+        }
+        .chart-container.small-image {
+            max-width: 40%; /* Adjust this value to make images smaller or larger */
+            margin: 0 auto;
+        }
+
+        .chart-row .chart-col .chart-container.small-image {
+            max-width: 100%; /* This ensures the image doesn't exceed its container */
+        }
+
+        @media (max-width: 768px) {
+            .chart-container.small-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Budgetanalyse Rapport</h1>
+
+        <p>Denne rapport præsenterer resultatet af en grundig analyse af budget- og forbrugsdata. Nedenfor følger en oversigt over fremgangsmåden, vigtige beslutninger og observationer.</p>
+
+        <h2>Overblik over datastrukturen</h2>
+
+        <p>Analysen begyndte med at danne et overblik over relationerne mellem de forskellige datatabeller. Følgende nøgletabeller blev identificeret:</p>
+
+        <ul>
+            <li>facts_budgetpost</li>
+            <li>facts_financialpost</li>
+            <li>dim_dato</li>
+            <li>dim_sted</li>
+            <li>dim_delregnskab</li>
+            <li>dim_kontoplan</li>
+        </ul>
+
+        <div class="chart-container small-image">
+            <img src="./utils/relationship.png" alt="Relationer mellem datatabeller">
+        </div>
+
+        <p>Dette overblik har været afgørende for at forstå datastrukturen og muliggjorde en effektiv kombination af informationer fra forskellige kilder. Det skal bemærkes, at dim_dato er en dato-støttetabel, som er undladt i den aktuelle analyse. Samt at DelregnskabID ikke er et ID der matcher mellem tabellerne</p>
+
+        <h2>Vigtige antagelser og beslutninger i analyseprocessen</h2>
+
+        <ol>
+            <li><strong>Budgetnavn som prognose:</strong> En central antagelse i analysen er, at hvert unikt 'Budgetnavn' repræsenterer en separat prognose. Dette betyder, at hver prognose (f.eks. RI23, UI22K1, MI2204) behandles som en individuel finansiel fremskrivning.</li>
+            <li><strong>Datarensning:</strong> Rækker med ugyldige datoer blev fjernet for at sikre præcision i den tidsmæssige analyse.</li>
+            <li><strong>Budgetsammenligning:</strong> Analysen arbejdede med tre forskellige budgettal: Budget, Budgetbeløb_Vedrører og Oprindeligt Budgetbeløb. For at forenkle sammenligningen blev et gennemsnit af disse tre tal beregnet, kaldet "Averaged_budgets".</li>
+            <li><strong>Tidsjustering:</strong> For at sikre en fair sammenligning mellem budget og forbrug blev finansielle datoer justeret til månedens sidste dag, så de matcher budgetdatoerne.</li>
+            <li><strong>Grupperingsmetode:</strong> Data blev grupperet efter 'Budgetnavn' for at give et detaljeret indblik i forskellige prognoser.</li>
+            <li><strong>Beregning af udnyttelsesprocent:</strong> En sikker metode til at beregne udnyttelsesprocenten blev implementeret, som håndterer tilfælde, hvor budgettet er nul.</li>
+            <li><strong>Visuel præsentation:</strong> Linjediagrammer og søjlediagrammer blev skabt for at vise udviklingen over tid og sammenligne totale årlige beløb for budget og forbrug for hver prognose.</li>
+            <li><strong>Gennemsnitlig budgetanalyse:</strong> Udover individuelle prognosesanalyser blev en oversigt over det gennemsnitlige budget på tværs af alle budgetnavne (prognoser) skabt.</li>
+        </ol>
+
+
+
+        <h2>Vigtige observationer</h2>
+
+        <h3>1. Variation i prognosepræcision</h3>
+        <p>Der er observeret betydelige variationer i budgetudnyttelsen på tværs af forskellige prognoser (budgetnavne). Disse variationer afslører interessante mønstre:</p>
+        <p><strong>på tværs af prognoser:</strong> De fleste prognoser afspejler underudnyttelse, hvor det faktiske forbrug er lavere end det tildelte gennemsnitlige budget. Denne underforbrug tyder på, at mange prognoser muligvis har overvurderet deres finansielle behov.</p>
+
+                <!-- Flyt den ønskede sektion op her -->
+                <div class="chart-container small-image">
+                    <img src="./output/Average_Budgets_and_Actuals_Column_Chart.png" alt="Gennemsnitlige budgetter og faktiske tal">
+                </div>
+        <ul>
+            <li><strong>Underudnyttelse:</strong> Andre prognoser, som UI22K1, UI22K3 og MI2204, viser konsekvent underudnyttelse, typisk omkring 10-20% under det budgetterede beløb.</li>
+            <li><strong>Ekstrem underudnyttelse:</strong> I særlige tilfælde, som RI22, er der observeret en massiv underudnyttelse, hvor op til 81,15% af det allokerede budget forbliver ubrugt. Dette er kun baseret på 1 måneds data (</li>
+            <li><strong>Anomalier:</strong> Prognosen RI21 viser en negativ udgift (-10.481.853) mod et budgetteret beløb på 90 millioner.</li>
+        </ul>
+
+        <div class="chart-row">
+            <div class="chart-col">
+                <div cclass="chart-container small-image">
+                    <img src="./output/MI2204_annual_totals_column_chart.png" alt="RI23 årlige totaler">
+                </div>
+            </div>
+            <div class="chart-col">
+                <div class="chart-container small-image">
+                    <img src="./output/UI22K1_annual_totals_column_chart.png" alt="UI22K1 årlige totaler">
+                </div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-col">
+                <div class="chart-container small-image">
+                    <img src="./output/RI22_annual_totals_column_chart.png" alt="RI22 årlige totaler">
+                </div>
+            </div>
+            <div class="chart-col">
+                <div class="chart-container small-image">
+                    <img src="./output/RI21_annual_totals_column_chart.png" alt="RI21 årlige totaler">
+                </div>
+            </div>
+        </div>
+
+        <h3>2. Tidsmæssige mønstre</h3>
+        <p>Linjediagrammerne afslører interessante mønstre i udgifterne over tid for hver prognose, herunder:</p>
+        <ul>
+            <li><strong>Sæsonmæssige udsving:</strong> Nogle prognoser viser tydelige sæsonmæssige mønstre i udgifterne.</li>
+            <li><strong>Forsinkede udgifter:</strong> I flere tilfælde ses det, at de faktiske udgifter starter lavt i begyndelsen af budgetperioden og stiger mod slutningen.</li>
+            <li><strong>Budgetjusteringer:</strong> Nogle prognoser viser pludselige ændringer i budgetlinjen, hvilket tyder på midtvejsjusteringer.</li>
+            <li><strong>Stabile vs. volatile prognoser:</strong> Nogle områder viser stabilitet, mens andre udviser høj volatilitet.</li>
+            <li><strong>Gennemsnits prognoser:</strong> Gennemsnits prognoser fra alle budgetnavne visers sig mindre volatile end hver prognose for sig selv. Hvilket man kender fra især statistikkens og MLs verden med random forret og model stacking</li>
+        </ul>
+
+        <div class="chart-row">
+            <div class="chart-col">
+                <div class="chart-container">
+                    <img src="./output/Average_Budgets_and_Actuals_Line_Chart.png" alt="RI23 kombineret linjediagram">
+                </div>
+            </div>
+            <div class="chart-col">
+                <div class="chart-container">
+                    <img src="./output/UI22K1_combined_line_chart.png" alt="UI22K1 kombineret linjediagram">
+                </div>
+            </div>
+        </div>
+
+        <h3>3. Gennemsnitlig tendens</h3>
+        <p>Analysen af det gennemsnitlige budget giver et overordnet billede af organisationens budgetpræstation på tværs af alle prognoser, herunder:</p>
+        <ul>
+            <li><strong>Samlet budgetudnyttelse:</strong> Generel tendens til underudnyttelse af budgettet.</li>
+            <li><strong>Afvigelsesmønstre:</strong> Betydelige afvigelser fra den gennemsnitlige tendens i individuelle prognoser.</li>
+            <li><strong>Tidsmæssig udvikling:</strong> Tendens til at budgetudnyttelsen stiger mod slutningen af regnskabsperioden, men her ses også et market fald i omkostninger generelt.</li>
+            <li><strong>Konsistens i budgettering:</strong> Varierende grad af konsistens i budgetteringsprocessen på tværs af forskellige områder.</li>
+        </ul>
+
+        <h3>4. Alignment mellem budget og forbrug - Ressourceallokering</h3>
+        <p>En sammenligning af budget og faktiske udgifter afslører:</p>
+        <ul>
+            <li><strong>Overensstemmelse:</strong> God overensstemmelse i kategorier som "Tilskud til personer uspec" og "Husleje, leje af arealer, leasing uspec".</li>
+            <li><strong>Afvigelser:</strong> Kategorier som "Interne statslige overførselsind uspec" viser større negative værdier i forbruget end budgetteret.</li>
+            <li><strong>Mindre kategorier:</strong> Konsistens i mindre kategorier som "Lønninger / personaleomkostninger uspec".</li>
+            <li><strong>Koncentration af ressourcer:</strong> Høj koncentration af ressourcer (85,64% af det samlede forbrug) allokeret til "Tilskud til personer uspec".</li>
+            <li><strong>Negative værdier:</strong> Kategorier som "Interne statslige overførselsind uspec" viser negative værdier, hvilket indikerer højere indtægter eller besparelser end forventet.</li>
+        </ul>
+
+        <div class="chart-row">
+            <div class="chart-col">
+                <div class="chart-container">
+                    <img src="./output/budget_allocation_by_Budgetartnavn_averaged_budget_with_percentages.png" alt="Budgetallokering med procentdele">
+                </div>
+            </div>
+            <div class="chart-col">
+                <div class="chart-container">
+                    <img src="./output/summed_financial_allocation_by_Budgetartnavn_with_percentages.png" alt="Finansiel allokering med procentdele">
+                </div>
+            </div>
+        </div>
+
+        <h2>Konklusion</h2>
+        <p>Efter en grundig analyse af organisationens budget- og forbrugsdata kan følgende hovedkonklusioner drages:</p>
+        <ol>
+            <li><strong>Varierende prognosepræcision:</strong> Betydelige variationer i budgetudnyttelsen indikerer behov for mere præcis prognosticering for den enkelte prognose, men bedre i gennemsnit.</li>
+            <li><strong>Tidsmæssige udgiftsmønstre:</strong> Observerede mønstre bør tages i betragtning i fremtidig budgetplanlægning.</li>
+            <li><strong>Generel underudnyttelse:</strong> En konservativ tilgang til budgettering kan hæmme optimal ressourceudnyttelse.</li>
+            <li><strong>God overensstemmelse i nogle kategorier:</strong> Præcis budgettering i flere nøgleområder.</li>
+            <li><strong>Koncentreret ressourceallokering:</strong> Behov for at evaluere den høje allokering til "Tilskud til personer uspec".</li>
+        </ol>
+
+        <p>Overordnet set viser analysen, at organisationen har en solid budgetteringsproces med god overensstemmelse mellem budget og forbrug i flere nøglekategorier. Der er dog også områder med potentiale for forbedring.</p>
+
+        <div class="recommendations">
+            <h2>Anbefalinger</h2>
+            <p>For at forbedre budgetteringsprocessen og økonomistyringen anbefales det at:</p>
+            <ol>
+                <li>Gennemføre en dybdegående gennemgang af prognoser med betydelige afvigelser for at identificere årsagerne.</li>
+                <li>Implementere en mere dynamisk budgetteringsproces, der tager højde for observerede tidsmæssige mønstre og tillader fleksible justeringer.</li>
+                <li>Overveje en mere jævn fordeling af ressourcer på tværs af kategorier for at sikre optimal ressourceudnyttelse.</li>
+                <li>Indføre regelmæssig opfølgning på prognoser for at identificere og adressere afvigelser tidligt.</li>
+                <li>Standardisere budgetteringsmetoder på tværs af afdelinger for at opnå mere konsistente prognoser.</li>
+            </ol>
+        </div>
+
+    </div>
+</body>
+</html>

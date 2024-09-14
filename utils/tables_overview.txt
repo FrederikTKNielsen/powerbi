@@ -1,0 +1,338 @@
+--- Overview of facts_budgetpost ---
+
+Shape: 19062 rows, 11 columns
+
+
+Column Information:
+
+Column: Budget
+
+  - Type: object
+
+  - Missing Values: 1
+
+  - Unique Values: 1310
+
+Column: Budgetbeloeb_Vedroerer
+
+  - Type: float64
+
+  - Missing Values: 1
+
+  - Unique Values: 1079
+
+Column: Budgetnavn
+
+  - Type: object
+
+  - Missing Values: 0
+
+  - Unique Values: 12
+
+Column: Dato
+
+  - Type: datetime64[ns]
+
+  - Missing Values: 0
+
+  - Unique Values: 12
+
+Column: DelregnskabID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 3
+
+Column: Fast_AktivitetID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 19
+
+Column: Fast_ProjektID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 38
+
+Column: Fast_StedID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 20
+
+Column: OprindeligtBudgetbeloeb
+
+  - Type: float64
+
+  - Missing Values: 1
+
+  - Unique Values: 376
+
+Column: Regnskabsnr
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 1
+
+Column: SBS_BudgetartID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 13
+
+
+----------------------------------------
+
+--- Overview of facts_financialpost ---
+
+Shape: 6055 rows, 8 columns
+
+
+Column Information:
+
+Column: Bogføringsdato
+
+  - Type: object
+
+  - Missing Values: 0
+
+  - Unique Values: 308
+
+Column: DelregnskabID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 2
+
+Column: Fast_AktivitetID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 17
+
+Column: Fast_ProjektID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 38
+
+Column: Fast_StedID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 20
+
+Column: Forbrug
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 3881
+
+Column: Regnskabsnr
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 1
+
+Column: SBS_BudgetartID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 13
+
+
+----------------------------------------
+
+--- Overview of dim_sted ---
+
+Shape: 206 rows, 8 columns
+
+
+Column Information:
+
+Column: AfdelingsKode
+
+  - Type: object
+
+  - Missing Values: 5
+
+  - Unique Values: 26
+
+Column: DatasaetID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 5
+
+Column: EnhedKode
+
+  - Type: float64
+
+  - Missing Values: 206
+
+  - Unique Values: 0
+
+Column: Fast_StedID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 206
+
+Column: Fast_StedKode
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 45
+
+Column: InstitutionsKode
+
+  - Type: float64
+
+  - Missing Values: 206
+
+  - Unique Values: 0
+
+Column: KontorKode
+
+  - Type: float64
+
+  - Missing Values: 135
+
+  - Unique Values: 18
+
+Column: TeamKode
+
+  - Type: float64
+
+  - Missing Values: 206
+
+  - Unique Values: 0
+
+
+----------------------------------------
+
+--- Overview of dim_kontoplan ---
+
+Shape: 252 rows, 7 columns
+
+
+Column Information:
+
+Column: BudgetartKode
+
+  - Type: object
+
+  - Missing Values: 0
+
+  - Unique Values: 131
+
+Column: Budgetartlogik
+
+  - Type: float64
+
+  - Missing Values: 6
+
+  - Unique Values: 2
+
+Column: Budgetartnavn
+
+  - Type: object
+
+  - Missing Values: 0
+
+  - Unique Values: 92
+
+Column: DatasaetID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 6
+
+Column: NS_Regnskabsnr
+
+  - Type: float64
+
+  - Missing Values: 4
+
+  - Unique Values: 1
+
+Column: SBS_BudgetartID
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 252
+
+Column: Standardkonto
+
+  - Type: float64
+
+  - Missing Values: 6
+
+  - Unique Values: 55
+
+
+----------------------------------------
+
+--- Overview of dim_delregnskab ---
+
+Shape: 4 rows, 2 columns
+
+
+Column Information:
+
+Column: DelregnskabID
+
+  - Type: object
+
+  - Missing Values: 0
+
+  - Unique Values: 4
+
+Column: DelregnskabKode
+
+  - Type: float64
+
+  - Missing Values: 0
+
+  - Unique Values: 4
+
+
+----------------------------------------
+

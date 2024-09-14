@@ -1,0 +1,30 @@
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in DelregnskabID: 0 common IDs
+Common IDs: []
+
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in Fast_AktivitetID: 0 common IDs
+Common IDs: []
+
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in Fast_ProjektID: 0 common IDs
+Common IDs: []
+
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in Fast_StedID: 0 common IDs
+Common IDs: []
+
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in Regnskabsnr: 1 common IDs
+Common IDs: [np.float64(1.0)]
+
+Overlapping IDs between facts_budgetpost and facts_financial_post
+
+Overlap found in SBS_BudgetartID: 13 common IDs
+Common IDs: [np.float64(2.0), np.float64(3.0), np.float64(4.0), np.float64(5.0), np.float64(7.0), np.float64(8.0), np.float64(9.0), np.float64(10.0), np.float64(11.0), np.float64(13.0), np.float64(15.0), np.float64(16.0), np.float64(17.0)]
+
